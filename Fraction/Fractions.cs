@@ -2,6 +2,11 @@
 // задача Класс Дробное число со знаком (Fractions). Число должно быть представлено двумя полями:
 // целая часть - длинное целое со знаком, дробная часть - беззнаковое короткое целое.
 // Реализовать арифметические операции сложения, вычитания, умножения и операции сравнения. В функции main проверить эти методы.
+
+
+// сделать хуйню для того чтоб пользователь вводил сам
+
+
 class Fractions
 {
     public int Numenator;      // числитель 
@@ -11,6 +16,10 @@ class Fractions
     {
         this.Numenator = Numenator;
         this.Denumenator = Denumenator;
+    }
+    public static bool Validate(string input)
+    {
+        return true;
     }
 
     public static Fractions Sum(Fractions a, Fractions b)        // сложение 
@@ -34,10 +43,15 @@ class Fractions
 
         return new Fractions(resultNum, (ushort)resultDenum);
     }
-    public static bool Compare(Fractions a, Fractions b) //сравнение 
+    public static Fractions Division (Fractions a, Fractions b) //деление
     {
-        double numA = a.Numenator * b.Denumenator;
-        double numB = b.Numenator * a.Denumenator;
-        return numA == numB;
+        int resultNum = a.Numenator * b.Denumenator;
+        int resultDenum = a.Denumenator * b.Numenator;
+        return new Fractions(resultNum, resultDenum);
+    }
+
+    public override string? ToString()
+    {
+        return $"{Numenator}/{Denumenator}";
     }
 }

@@ -1,21 +1,75 @@
-﻿
+﻿using System;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 
-class Program
+public static class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        Fractions frac1 = new Fractions(4, 75);
-        Fractions frac2 = new Fractions(8, 16);
+        while (true)
+        {
+            Console.WriteLine("Введите операцию с дробными числами");
+            string input1 = Console.ReadLine();
 
-        Fractions sum = Fractions.Sum(frac1, frac2);
-        Fractions sub = Fractions.Subtraction(frac1, frac2);
-        Fractions mult = Fractions.Multiplication(frac1, frac2);
+            Console.Write("Введите операцию или stop для выхода:");
+            string input = Console.ReadLine();
 
-        Console.WriteLine("Fraction 1: {0}/{1}", frac1.Numenator, frac2.Denumenator);
-        Console.WriteLine("Fraction 2: {0}/{1}", frac1.Numenator, frac2.Denumenator);
-        Console.WriteLine("Sum: {0}/{1}", sum.Numenator, sum.Denumenator);
-        Console.WriteLine("Subtraction: {0}/{1}", sub.Numenator, sub.Denumenator);
-        Console.WriteLine("Multiplication: {0}/{1}", mult.Numenator, mult.Denumenator);
-        Console.WriteLine("Compare result: " + Fractions.Compare(frac1, frac2));
+            if (input.ToLower() == "stop")
+            {
+                Console.WriteLine("Программа завершена.");
+                break;
+            }
+
+            double number;
+            if (!double.TryParse(input, out number))
+            {
+                Console.WriteLine("Ошибка. Введите операцию или stop для выхода.");
+                continue;
+            }
+
+
+
+            // цикл для бесконечного калькулятора и при вводе слова stop прога офф, и если не правильные числа сказать что ты еблан и дать возможность считать дальше
+            Regex regex = new(@"^(\d+)\/(\d+)(\*|\+|\-|\/)(\d+)\/(\d+)");
+
+            var consdition = regex.IsMatch(input1);
+
+            if (consdition == false)
+            {
+                return;
+            }
+
+            var match = regex.Match(input1);
+            var numerator1 = int.Parse(match.Groups[1].Value);
+            var denumerator1 = int.Parse(match.Groups[2].Value);
+            var operation = match.Groups[3].Value;
+            var numerator2 = int.Parse(match.Groups[4].Value);
+            var denumerator2 = int.Parse(match.Groups[5].Value);
+
+            var frac1 = new Fractions(numerator1, denumerator1);
+            var frac2 = new Fractions(numerator2, denumerator2);
+            switch (operation)
+            {
+                case "+":
+                    var sum = Fractions.Sum(frac1, frac2);
+                    Console.WriteLine($"Результат: {sum}");
+                    break;
+                case "-":
+                    var sub = Fractions.Subtraction(frac1, frac2);
+                    Console.WriteLine("Результат: {sub}");
+                    break;
+                case "*":
+                    var mult = Fractions.Multiplication(frac1, frac2);
+                    Console.WriteLine("$Результат:{mult}");
+                    break;
+                case "/":
+                    var div = Fractions.Division(frac1, frac2);
+                    Console.WriteLine("$Результат:{div}");
+                    break;
+            }
+        }
     }
 }
+
+
