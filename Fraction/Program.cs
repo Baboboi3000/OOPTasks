@@ -12,17 +12,12 @@ public static class Program
             Console.WriteLine("Введите операцию с дробными числами");
             string input1 = Console.ReadLine();
 
-            //Console.Write("Введите операцию или stop для выхода:");
-            //string input = Console.ReadLine();
-
             if (input1.ToLower() == "stop")
             {
                 Console.WriteLine("Программа завершена.");
                 break;
             }
-           
-        
-            // цикл для бесконечного калькулятора и при вводе слова stop прога офф, и если не правильные числа сказать что ты еблан и дать возможность считать дальше
+            
             Regex regex = new(@"^(\d+)\/(\d+)(\*|\+|\-|\/)(\d+)\/(\d+)");
 
             var consdition = regex.IsMatch(input1);
