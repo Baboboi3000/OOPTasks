@@ -12,24 +12,16 @@ public static class Program
             Console.WriteLine("Введите операцию с дробными числами");
             string input1 = Console.ReadLine();
 
-            Console.Write("Введите операцию или stop для выхода:");
-            string input = Console.ReadLine();
+            //Console.Write("Введите операцию или stop для выхода:");
+            //string input = Console.ReadLine();
 
-            if (input.ToLower() == "stop")
+            if (input1.ToLower() == "stop")
             {
                 Console.WriteLine("Программа завершена.");
                 break;
             }
-
-            double number;
-            if (!double.TryParse(input, out number))
-            {
-                Console.WriteLine("Ошибка. Введите операцию или stop для выхода.");
-                continue;
-            }
-
-
-
+           
+        
             // цикл для бесконечного калькулятора и при вводе слова stop прога офф, и если не правильные числа сказать что ты еблан и дать возможность считать дальше
             Regex regex = new(@"^(\d+)\/(\d+)(\*|\+|\-|\/)(\d+)\/(\d+)");
 
@@ -37,7 +29,8 @@ public static class Program
 
             if (consdition == false)
             {
-                return;
+                Console.WriteLine("Ошибка.Введите операцию или слово stop для выхода");
+                continue;
             }
 
             var match = regex.Match(input1);
@@ -67,7 +60,7 @@ public static class Program
                     var div = Fractions.Division(frac1, frac2);
                     Console.WriteLine("$Результат:{div}");
                     break;
-            }
+            }    
         }
     }
 }
